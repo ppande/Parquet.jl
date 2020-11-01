@@ -443,6 +443,10 @@ function is_par_file(fname::AbstractString)
     end
 end
 
+function filesize(io::IOBuffer)
+    length(io.data)
+end
+
 function is_par_file(io)
     sz = filesize(io)
     (sz > SZ_VALID_PAR) || return false
