@@ -52,7 +52,7 @@ Returns a `Parquet.File` type that keeps a handle to the open file and the file 
 """
 mutable struct File
     path::String
-    handle::IOStream
+    handle::IO
     meta::FileMetaData
     schema::Schema
     page_cache::PageLRU
@@ -68,7 +68,7 @@ function File(path::AbstractString; map_logical_types::Dict=TLogicalTypeMap())
     end
 end
 
-function File(path::AbstractString, handle::IOStream; map_logical_types::Dict=TLogicalTypeMap())
+function File(path::AbstractString, handle::IO; map_logical_types::Dict=TLogicalTypeMap())
     is_par_file(handle) || error("Not a parquet format file: $path")
     meta_len = metadata_length(handle)
     meta = metadata(handle, path, meta_len)
